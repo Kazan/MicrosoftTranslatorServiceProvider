@@ -24,7 +24,9 @@ class MicrosoftTranslatorServiceProvider implements ServiceProviderInterface
     private function registerMicrosoftOAuth(Application $app)
     {
         $app['microsoft_oauth.access_token_provider.browser.client'] = $app->share(function() {
-            return new FileGetContents();
+            $getContents = new FileGetContents();
+            $getContents->setVerifyPeer(false);
+            return $getContents;
         });
 
         $app['microsoft_oauth.access_token_cache.cache'] = $app->share(function(Application $app) {
